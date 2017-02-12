@@ -1,68 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Todo list web</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
-    <script type="text/x-jquery-tmpl" id="Temp_list">
-        <li ${status == 0 ? 'class=todo' : 'class=checked'} id=${id}>${content}</li>
-    </script>
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                type: "GET",
-                // url: "/php/getTodo.php",
-                url: "http://163.22.17.215/php/getTodo.php",
-                datatype: "json",
-                success: function (result) {
-                    $array = $.parseJSON(result);
-                    $("#Temp_list").tmpl($array).appendTo("#Content_todolist_ul");
-                    $jsloader = document.createElement("script");
-                    $jsloader.setAttribute("type","text/javascript");
-                    $jsloader.setAttribute("src", "js/index.js");
-                    document.getElementsByTagName("head")[0].appendChild($jsloader)
-                }
-            });
-        });
-    </script>
+  <title>To Do List</title>
+  <link rel="shortcut icon" href="img/logo.png">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+  <script type="text/x-jquery-tmpl" id="Temp_list">
+    <li ${status == 0 ? 'class=todo' : 'class=checked'} id=${id}>${content}</li>
+  </script>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        type: "GET",
+        url: "http://163.22.17.215/php/getTodo.php",
+        datatype: "json",
+        success: function (result) {
+          let array = $.parseJSON(result);
+          $("#Temp_list").tmpl(array).appendTo("#list_ul");
+          let jsloader = document.createElement("script");
+          jsloader.setAttribute("type","text/javascript");
+          jsloader.setAttribute("src", "js/index.js");
+          document.getElementsByTagName("head")[0].appendChild(jsloader)
+        }
+      });
+    });
+  </script>
 </head>
 <body>
-
-    <header>
-        <div class="Header_wrapper">
-            <h1>LiteTodo</h1>
-        </div>
-    </header>
-
-    <content>
-
-        <div class="Content_title">
-            <h1>My Todo List</h1>
-        </div>
-
-        <div class="Content_control_bar">
-            <div class="Content_control_bar_container">
-                <input id="Content_control_bar_container_input" type="text" placeholder="Please type what you need to do" value="">
-                <span id="Content_control_bar_container_btn">ADD</span>
-            </div>
-        </div>
-
-        <div class="Content_todolist">
-            <div class="Content_todolist_container">
-                <ul id="Content_todolist_ul">
-                </ul>
-            </div>
-        </div>
-
-        <div>
-        <a href="#" id="All">All</a>
-            <a href="#" id="Active">Active</a>
-            <a href="#" id="Completed">Completed</a>
-            <a href="#" id="Clear">ClearCompleted</a>
-        </div>
-
-    </content>
-
+  <div class="Content">
+    <h1>ToDoList</h1>
+    <div class="Commit">
+      <input id="Commit_input" type="text" placeholder="Enter a todo...">
+      <span id="Commit_add">ADD</span>
+    </div>
+    <div class="ToDoList">
+      <ul id="list_ul">
+      </ul>
+    </div>
+    <div class="SelectOption">
+      <a href="#" id="All">All</a>
+      <a href="#" id="Active">Active</a>
+      <a href="#" id="Completed">Completed</a>
+      <a href="#" id="Clear">ClearCompleted</a>
+    </div>
+  </div>
 </body>
 </html>
